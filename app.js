@@ -19,8 +19,10 @@ mongoose.connect('mongodb://127.0.0.1:27017/'+ config.bd,{useNewurlParser:true,u
 })
 
 
-
 require('./routes/rutas.js')
+
+
+app.use('/',express.static(__dirname + '/Pagina'))
 
 
 app.listen(config.puerto,function(){
