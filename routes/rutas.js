@@ -29,7 +29,9 @@ app.post('/Usuarios/Eliminar',function(request,response){
     usuarios.Eliminar(request,response)
 })
    
-   
+app.post('/Usuarios/Login',function(request,response){  
+    usuarios.Login(request,response)
+})   
 
 
 

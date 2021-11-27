@@ -6,7 +6,10 @@ var usuariosController = {}
 usuariosController.Guardar = function(request,response){
 
     var post = {
-        nombre:request.body.nombre
+        nombre:request.body.nombre,
+        email:request.body.email,
+        password:sha256(request.body.password + config.secretpassword),
+        confirmar:sha256(request.body.confirmar + config.secretpassword)
     }
 
     if(post.nombre == undefined || post.nombre == null || post.nombre == ''){
@@ -14,8 +17,36 @@ usuariosController.Guardar = function(request,response){
         return;
     }
 
+    if(post.email == undefined || post.email == null || post.email == ''){
+        response.json({state:false,mensaje:'el campo email es obligatorio'})
+        return;
+    }
+
+    if(request.body.password == undefined || request.body.password == null || request.body.password == ''){
+        response.json({state:false,mensaje:'el campo password es obligatorio'})
+        return;
+    }
+
+    if(request.body.confirmar == undefined || request.body.confirmar == null || request.body.confirmar == ''){
+        response.json({state:false,mensaje:'el campo confirmar es obligatorio'})
+        return;
+    }
+
+    if(post.password != post.confirmar){
+        response.json({state:false,mensaje:'el campo confirmar y password no coinciden'})
+        return;
+    }
+
+    console.log(post)
+
     usuariosModel.Guardar(post,function(respuesta){
-        response.json(respuesta)
+       
+        if(respuesta.state == true){
+            response.json({state:true,mensaje:'Usuario Creado Correctamente'})
+        }
+        else{
+            response.json({state:false,mensaje:'Error al Crear Usuario'})
+        }
     })
 
 
@@ -99,5 +130,32 @@ usuariosController.Eliminar = function(request,response){
 
 }
 
+usuariosController.Login = function(request,response){
+    var post = {
+       email:request.body.email,
+       password:sha256(request.body.password + config.secretpassword)
+    }
+
+    if(post.email == undefined || post.email == null || post.email == ''){
+        response.json({state:false,mensaje:'el campo email es obligatorio'})
+        return;
+    }
+
+    if(request.body.password == undefined || request.body.password == null || request.body.password == ''){
+        response.json({state:false,mensaje:'el campo password es obligatorio'})
+        return;
+    }
+
+    usuariosModel.Login(post,function(respuesta){
+
+        if(respuesta[0].password == post.password){
+            response.json({state:true,mensaje:'Bienvenido',id:respuesta[0]._id})
+        }
+        else{
+            response.json({state:false,mensaje:'Usuario o Password incorrecto'})
+        }
+      
+    })
+}
 
 module.exports.usuarios = usuariosController
