@@ -149,6 +149,11 @@ usuariosController.Login = function(request,response){
     usuariosModel.Login(post,function(respuesta){
 
         if(respuesta[0].password == post.password){
+            request.session.rol =  respuesta[0].rol
+            request.session.id = respuesta[0]._id
+            request.session.nombre = respuesta[0].nombre;
+            
+            console.log(request.session)
             response.json({state:true,mensaje:'Bienvenido',id:respuesta[0]._id})
         }
         else{

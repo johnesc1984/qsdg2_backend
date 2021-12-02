@@ -6,7 +6,8 @@ const Schema = mongoose.Schema;
 var UserSchema = new Schema({
     nombre:String,
     email:String,
-    password:String
+    password:String,
+    rol:String
 })
 const Mymodel = mongoose.model('usuarios',UserSchema)
 
@@ -17,6 +18,7 @@ usuariosModel.Guardar = function(post,callback){
     instancia.nombre = post.nombre
     instancia.email = post.email
     instancia.password = post.password
+    instancia.rol = 'Cliente'
 
 
     instancia.save((error,userCreate) => {
@@ -34,7 +36,7 @@ usuariosModel.Guardar = function(post,callback){
 
 usuariosModel.Listar = function(post,callback){
 
-    Mymodel.find({},{nombre:1,_id:1,email:1},(error,documentos) => {
+    Mymodel.find({},{nombre:1,_id:1,email:1,rol:1},(error,documentos) => {
         if(error){
             console.log(error)
             return callback(error)
@@ -48,7 +50,7 @@ usuariosModel.Listar = function(post,callback){
 
 usuariosModel.ListarId = function(post,callback){
 
-    Mymodel.find({_id:post.id},{nombre:1,_id:1,email:1},(error,documentos) => {
+    Mymodel.find({_id:post.id},{nombre:1,_id:1,email:1,rol:1},(error,documentos) => {
         if(error){
             console.log(error)
             return callback(error)
@@ -91,7 +93,7 @@ usuariosModel.Eliminar = function(post,callback){
 
 usuariosModel.Login = function(post,callback){
 
-    Mymodel.find({email:post.email},{_id:1,password:1},(error,documentos) => {
+    Mymodel.find({email:post.email},{_id:1,password:1,rol:1,nombre:1},(error,documentos) => {
         if(error){
             console.log(error)
             return callback(error)
