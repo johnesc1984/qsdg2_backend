@@ -34,6 +34,24 @@ app.post('/Usuarios/Login',function(request,response){
 })   
 
 
+
+app.post("/Fotoperfil/Subir/", function (request, response) {
+      
+    var x = Math.random()
+     var config = {
+        destinoPath:'/AnexosPerfiles',
+        extensiones:['.jpg','.jpeg','.png','.gif','.tif'],
+        nombrearchivo:'hola',
+        inputName:'userFile'
+      }
+     
+      Herramientas.UploadFiles(request,config,function(respuesta){
+        response.json(respuesta)
+      })
+
+});
+  
+
 var email = require('../controladores/emailController.js').email;
 
 // enviar correo electronico

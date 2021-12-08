@@ -1,6 +1,6 @@
 var config = {}
 
-config.puerto = 3000;
+config.puerto = 3001;
 config.bd = 'qsdg2'
 config.secretpassword = 'yeyruiqoroq'
 

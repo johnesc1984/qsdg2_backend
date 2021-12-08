@@ -16,6 +16,7 @@
     "express": "4.17.1",
     "express-session": "^1.17.2",
     "mongoose": "^6.0.13",
+    "multer": "^1.4.3",
     "nodemailer": "^6.7.2",
     "sha256": "^0.2.0"
   }
